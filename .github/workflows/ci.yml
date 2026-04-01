@@ -34,14 +34,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
+      - name: Setup Go
+        uses: actions/setup-go@0aaccfd150d50ccaeb58ebd88d36e91967a5f35b # v5.4.0
+        with:
+          go-version: "1.23"
+          cache: false
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@5e8dbf3c6d9deaf4193ca7a8fb23f2ac83bb6c85 # v4.0.0
-
-      - name: Terraform Init
-        run: terraform init -backend=false
+        with:
+          terraform_wrapper: false
 
       - name: Terraform Validate
-        run: terraform validate
+        run: make validate
 
   docs:
     name: Documentation Freshness
@@ -100,14 +105,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
+      - name: Setup Go
+        uses: actions/setup-go@0aaccfd150d50ccaeb58ebd88d36e91967a5f35b # v5.4.0
+        with:
+          go-version: "1.23"
+          cache: false
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@5e8dbf3c6d9deaf4193ca7a8fb23f2ac83bb6c85 # v4.0.0
-
-      - name: Terraform Init
-        run: terraform init -backend=false
+        with:
+          terraform_wrapper: false
 
       - name: Run Unit Tests
-        run: terraform test -test-directory=tests/unit
+        run: make test-unit
 
   integration:
     name: Integration Tests
