@@ -33,3 +33,6 @@ Thumbs.db
 
 # Patched provider build artifacts
 .patched-provider/
+
+# Bundled Go toolchain (used locally to build patched provider — never commit)
+go.tar.gz
