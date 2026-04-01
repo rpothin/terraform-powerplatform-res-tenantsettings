@@ -1,21 +1,5 @@
-variable "name" {
-  description = "The name of the resource."
+variable "allowed_tenant_id" {
+  description = "The Azure AD tenant ID to allow in the tenant isolation policy."
   type        = string
-  default     = "example-complete"
-}
-
-variable "location" {
-  description = "The geographic location for the resource."
-  type        = string
-  default     = "unitedstates"
-}
-
-variable "tags" {
-  description = "A map of tags to apply to the resource."
-  type        = map(string)
-  default = {
-    environment = "development"
-    project     = "power-platform-module"
-    managed_by  = "terraform"
-  }
+  default     = "00000000-0000-0000-0000-000000000001"
 }

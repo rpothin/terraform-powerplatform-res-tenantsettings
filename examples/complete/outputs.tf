@@ -1,9 +1,9 @@
 output "resource_id" {
-  description = "The ID of the managed resource."
+  description = "The ID of the Power Platform tenant settings resource."
   value       = module.this.resource_id
 }
 
-output "name" {
-  description = "The name of the managed resource."
-  value       = module.this.name
+output "tenant_isolation_policy_id" {
+  description = "The ID of the tenant isolation policy."
+  value       = module.this.tenant_isolation_policy_id
 }
