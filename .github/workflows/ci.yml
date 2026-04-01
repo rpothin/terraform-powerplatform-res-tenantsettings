@@ -144,6 +144,6 @@ jobs:
       - name: Run Integration Tests
         run: make test-integration
         env:
-          ARM_USE_OIDC: "true"
+          POWER_PLATFORM_USE_OIDC: "true"
           POWER_PLATFORM_TENANT_ID: ${{ secrets.POWER_PLATFORM_TENANT_ID }}
           POWER_PLATFORM_CLIENT_ID: ${{ secrets.POWER_PLATFORM_CLIENT_ID }}
