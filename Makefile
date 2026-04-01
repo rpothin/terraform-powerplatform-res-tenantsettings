@@ -19,8 +19,8 @@ test: test-unit test-integration
 test-unit: init provider-patch
 	TF_CLI_CONFIG_FILE=$(TERRAFORMRC) terraform test -test-directory=tests/unit
 
-test-integration: init
-	terraform test -test-directory=tests/integration
+test-integration: init provider-patch
+	TF_CLI_CONFIG_FILE=$(TERRAFORMRC) terraform test -test-directory=tests/integration
 
 docs:
 	terraform-docs .
