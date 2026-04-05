@@ -101,6 +101,7 @@ variable "power_platform" {
       storage_capacity_consumption_warning_threshold        = optional(number, 85)
       enable_tenant_licensing_report_for_environment_admins = optional(bool, true)
       disable_use_of_unassigned_ai_builder_credits          = optional(bool, true)
+      apply_auto_claim_to_only_managed_environments         = optional(bool, true)
     }), {})
 
     champions = optional(object({
@@ -109,7 +110,9 @@ variable "power_platform" {
     }), {})
 
     intelligence = optional(object({
-      disable_copilot = optional(bool, true)
+      disable_copilot                   = optional(bool, true)
+      disable_copilot_feedback          = optional(bool, true)
+      disable_copilot_feedback_metadata = optional(bool, true)
     }), {})
 
     model_experimentation = optional(object({

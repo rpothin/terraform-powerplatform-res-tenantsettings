@@ -53,6 +53,7 @@ resource "powerplatform_tenant_settings" "this" {
       storage_capacity_consumption_warning_threshold        = var.power_platform.licensing.storage_capacity_consumption_warning_threshold
       enable_tenant_licensing_report_for_environment_admins = var.power_platform.licensing.enable_tenant_licensing_report_for_environment_admins
       disable_use_of_unassigned_ai_builder_credits          = var.power_platform.licensing.disable_use_of_unassigned_ai_builder_credits
+      apply_auto_claim_to_only_managed_environments         = var.power_platform.licensing.apply_auto_claim_to_only_managed_environments
     }
 
     power_pages = {}
@@ -63,7 +64,9 @@ resource "powerplatform_tenant_settings" "this" {
     }
 
     intelligence = {
-      disable_copilot = var.power_platform.intelligence.disable_copilot
+      disable_copilot                   = var.power_platform.intelligence.disable_copilot
+      disable_copilot_feedback          = var.power_platform.intelligence.disable_copilot_feedback
+      disable_copilot_feedback_metadata = var.power_platform.intelligence.disable_copilot_feedback_metadata
     }
 
     model_experimentation = {

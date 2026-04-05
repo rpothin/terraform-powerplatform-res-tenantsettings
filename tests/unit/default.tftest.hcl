@@ -123,6 +123,23 @@ run "power_platform_defaults_are_secure" {
     error_message = "intelligence.disable_copilot should default to true."
   }
 
+  # The provider accepts these fields, but the mocked resource shape does not
+  # expose them back on the planned resource object.
+  assert {
+    condition     = var.power_platform.licensing.apply_auto_claim_to_only_managed_environments == true
+    error_message = "licensing.apply_auto_claim_to_only_managed_environments should default to true."
+  }
+
+  assert {
+    condition     = var.power_platform.intelligence.disable_copilot_feedback == true
+    error_message = "intelligence.disable_copilot_feedback should default to true."
+  }
+
+  assert {
+    condition     = var.power_platform.intelligence.disable_copilot_feedback_metadata == true
+    error_message = "intelligence.disable_copilot_feedback_metadata should default to true."
+  }
+
   assert {
     condition     = powerplatform_tenant_settings.this.power_platform.model_experimentation.enable_model_data_sharing == false
     error_message = "model_experimentation.enable_model_data_sharing should default to false."
@@ -142,7 +159,12 @@ run "accepts_partial_power_platform_overrides" {
         disable_docs_search = false
       }
       licensing = {
+        apply_auto_claim_to_only_managed_environments  = false
         storage_capacity_consumption_warning_threshold = 50
+      }
+      intelligence = {
+        disable_copilot_feedback          = false
+        disable_copilot_feedback_metadata = false
       }
     }
   }
@@ -160,6 +182,21 @@ run "accepts_partial_power_platform_overrides" {
   assert {
     condition     = powerplatform_tenant_settings.this.power_platform.licensing.storage_capacity_consumption_warning_threshold == 50
     error_message = "storage_capacity_consumption_warning_threshold should accept override to 50."
+  }
+
+  assert {
+    condition     = var.power_platform.licensing.apply_auto_claim_to_only_managed_environments == false
+    error_message = "apply_auto_claim_to_only_managed_environments should accept override to false."
+  }
+
+  assert {
+    condition     = var.power_platform.intelligence.disable_copilot_feedback == false
+    error_message = "disable_copilot_feedback should accept override to false."
+  }
+
+  assert {
+    condition     = var.power_platform.intelligence.disable_copilot_feedback_metadata == false
+    error_message = "disable_copilot_feedback_metadata should accept override to false."
   }
 }
 

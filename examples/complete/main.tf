@@ -53,6 +53,7 @@ module "this" {
       storage_capacity_consumption_warning_threshold        = 80
       enable_tenant_licensing_report_for_environment_admins = true
       disable_use_of_unassigned_ai_builder_credits          = true
+      apply_auto_claim_to_only_managed_environments         = true
     }
 
     champions = {
@@ -61,7 +62,9 @@ module "this" {
     }
 
     intelligence = {
-      disable_copilot = true
+      disable_copilot                   = true
+      disable_copilot_feedback          = true
+      disable_copilot_feedback_metadata = true
     }
 
     model_experimentation = {

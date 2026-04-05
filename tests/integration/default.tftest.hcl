@@ -31,7 +31,12 @@ run "applies_custom_settings" {
 
     power_platform = {
       licensing = {
+        apply_auto_claim_to_only_managed_environments  = false
         storage_capacity_consumption_warning_threshold = 90
+      }
+      intelligence = {
+        disable_copilot_feedback          = false
+        disable_copilot_feedback_metadata = false
       }
       catalog_settings = {
         power_catalog_audience_setting = "All"
