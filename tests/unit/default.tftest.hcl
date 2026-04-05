@@ -253,6 +253,22 @@ run "rejects_invalid_catalog_audience" {
   ]
 }
 
+run "rejects_none_catalog_audience" {
+  command = plan
+
+  variables {
+    power_platform = {
+      catalog_settings = {
+        power_catalog_audience_setting = "None"
+      }
+    }
+  }
+
+  expect_failures = [
+    var.power_platform,
+  ]
+}
+
 run "accepts_catalog_audience_all" {
   command = plan
 
