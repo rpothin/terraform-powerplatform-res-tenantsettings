@@ -380,7 +380,6 @@ run "outputs_resource_id" {
 
   override_resource {
     target          = powerplatform_tenant_settings.this
-    override_during = plan
     values = {
       id = "mock-tenant-settings-id"
     }
@@ -397,7 +396,6 @@ run "outputs_null_isolation_policy_id_by_default" {
 
   override_resource {
     target          = powerplatform_tenant_settings.this
-    override_during = plan
     values = {
       id = "mock-tenant-settings-id"
     }
