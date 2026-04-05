@@ -30,7 +30,7 @@ lint:
 	terraform fmt -check -recursive
 
 security-scan:
-	trivy config .
+	trivy config --config .trivy.yaml .
 
 check-all: fmt validate docs lint security-scan test-unit
 

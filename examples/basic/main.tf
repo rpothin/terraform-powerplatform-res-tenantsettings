@@ -1,3 +1,3 @@
 module "this" {
-  source = "../../"
+  source = "rpothin/power-platform/tenantsettings"
 }
