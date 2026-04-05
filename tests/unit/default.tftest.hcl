@@ -376,10 +376,10 @@ run "creates_isolation_policy_with_multiple_tenants" {
 # ──────────────────────────────────────────────────────────────
 
 run "outputs_resource_id" {
-  command = plan
+  command = apply
 
   override_resource {
-    target          = powerplatform_tenant_settings.this
+    target = powerplatform_tenant_settings.this
     values = {
       id = "mock-tenant-settings-id"
     }
@@ -392,10 +392,10 @@ run "outputs_resource_id" {
 }
 
 run "outputs_null_isolation_policy_id_by_default" {
-  command = plan
+  command = apply
 
   override_resource {
-    target          = powerplatform_tenant_settings.this
+    target = powerplatform_tenant_settings.this
     values = {
       id = "mock-tenant-settings-id"
     }
