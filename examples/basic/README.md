@@ -42,7 +42,7 @@ The following Modules are called:
 
 ### <a name="module_this"></a> [this](#module\_this)
 
-Source: rpothin/res-tenantsettings/power-platform
+Source: rpothin/res-tenantsettings/powerplatform
 
 Version:
 
