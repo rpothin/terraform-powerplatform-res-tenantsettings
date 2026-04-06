@@ -21,7 +21,7 @@ opinionated module with **secure-by-default** configuration.
 
 ```hcl
 module "tenant_settings" {
-  source  = "rpothin/power-platform/tenantsettings"
+  source  = "rpothin/res-tenantsettings/power-platform"
   version = "~> 0.1"
 }
 ```
@@ -30,7 +30,7 @@ To customize specific settings while keeping secure defaults for everything else
 
 ```hcl
 module "tenant_settings" {
-  source  = "rpothin/power-platform/tenantsettings"
+  source  = "rpothin/res-tenantsettings/power-platform"
   version = "~> 0.1"
 
   disable_environment_creation_by_non_admin_users = false

@@ -1,3 +1,3 @@
 module "this" {
-  source = "rpothin/power-platform/tenantsettings"
+  source = "rpothin/res-tenantsettings/power-platform"
 }
