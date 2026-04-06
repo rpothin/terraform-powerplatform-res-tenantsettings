@@ -13,7 +13,7 @@ Step-by-step instructions for publishing a new release of the module.
 
 ### Code Quality
 
-- [ ] Example `source` values updated from `../../` to the Terraform Registry address (e.g. `rpothin/res-tenantsettings/power-platform`)
+- [ ] Example `source` values updated from `../../` to the Terraform Registry address (e.g. `rpothin/res-tenantsettings/powerplatform`)
 - [ ] All CI checks pass on the `main` branch
 - [ ] `terraform fmt -check -recursive` passes
 - [ ] `make validate` passes
@@ -85,7 +85,7 @@ This project follows [Semantic Versioning](https://semver.org/):
 
      ```hcl
      module "example" {
-       source  = "rpothin/res-tenantsettings/power-platform"
+       source  = "rpothin/res-tenantsettings/powerplatform"
        version = "0.1.0"
        # ...
      }

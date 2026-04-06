@@ -1,5 +1,5 @@
 module "this" {
-  source = "rpothin/res-tenantsettings/power-platform"
+  source = "rpothin/res-tenantsettings/powerplatform"
 
   walk_me_opt_out                                       = true
   disable_support_tickets_visible_by_all_users          = true
