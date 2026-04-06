@@ -68,15 +68,17 @@ variable "power_platform" {
     }), {})
 
     power_apps = optional(object({
-      disable_share_with_everyone              = optional(bool, true)
-      enable_guests_to_make                    = optional(bool, false)
-      disable_maker_match                      = optional(bool, true)
-      disable_unused_license_assignment        = optional(bool, true)
       disable_connection_sharing_with_everyone = optional(bool, true)
+      disable_maker_match                      = optional(bool, true)
+      disable_members_indicator                = optional(bool, true)
+      disable_share_with_everyone              = optional(bool, true)
+      disable_unused_license_assignment        = optional(bool, true)
+      enable_guests_to_make                    = optional(bool, false)
     }), {})
 
     power_automate = optional(object({
-      disable_copilot = optional(bool, true)
+      disable_copilot           = optional(bool, true)
+      disable_copilot_with_bing = optional(bool, true)
     }), {})
 
     environments = optional(object({
@@ -140,6 +142,22 @@ variable "power_platform" {
   validation {
     condition     = contains(["All", "SpecificAdmins"], var.power_platform.catalog_settings.power_catalog_audience_setting)
     error_message = "power_catalog_audience_setting must be either 'All' or 'SpecificAdmins'."
+  }
+
+  validation {
+    condition = var.power_platform.governance.environment_routing_target_environment_group_id == null || can(regex(
+      "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+      var.power_platform.governance.environment_routing_target_environment_group_id
+    ))
+    error_message = "environment_routing_target_environment_group_id must be a valid UUID (xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx) or null."
+  }
+
+  validation {
+    condition = var.power_platform.governance.environment_routing_target_security_group_id == null || can(regex(
+      "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+      var.power_platform.governance.environment_routing_target_security_group_id
+    ))
+    error_message = "environment_routing_target_security_group_id must be a valid UUID (xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx) or null."
   }
 }
 

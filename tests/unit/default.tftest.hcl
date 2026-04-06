@@ -104,8 +104,18 @@ run "power_platform_defaults_are_secure" {
   }
 
   assert {
+    condition     = powerplatform_tenant_settings.this.power_platform.power_apps.disable_members_indicator == true
+    error_message = "power_apps.disable_members_indicator should default to true."
+  }
+
+  assert {
     condition     = powerplatform_tenant_settings.this.power_platform.power_automate.disable_copilot == true
     error_message = "power_automate.disable_copilot should default to true."
+  }
+
+  assert {
+    condition     = var.power_platform.power_automate.disable_copilot_with_bing == true
+    error_message = "power_automate.disable_copilot_with_bing should default to true."
   }
 
   assert {
@@ -396,6 +406,74 @@ run "creates_disabled_isolation_policy" {
     condition     = var.tenant_isolation_policy.is_disabled == true
     error_message = "is_disabled should be true when set."
   }
+}
+
+# ──────────────────────────────────────────────────────────────
+# Validation: environment routing UUID fields
+# ──────────────────────────────────────────────────────────────
+
+run "accepts_null_routing_group_ids" {
+  command = plan
+
+  assert {
+    condition     = var.power_platform.governance.environment_routing_target_environment_group_id == null
+    error_message = "environment_routing_target_environment_group_id should default to null."
+  }
+
+  assert {
+    condition     = var.power_platform.governance.environment_routing_target_security_group_id == null
+    error_message = "environment_routing_target_security_group_id should default to null."
+  }
+}
+
+run "accepts_valid_uuid_for_routing_group_ids" {
+  command = plan
+
+  variables {
+    power_platform = {
+      governance = {
+        environment_routing_target_environment_group_id = "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"
+        environment_routing_target_security_group_id    = "11111111-2222-3333-4444-555555555555"
+      }
+    }
+  }
+
+  assert {
+    condition     = var.power_platform.governance.environment_routing_target_environment_group_id == "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"
+    error_message = "Valid UUID should be accepted for environment_routing_target_environment_group_id."
+  }
+}
+
+run "rejects_invalid_uuid_for_environment_group_id" {
+  command = plan
+
+  variables {
+    power_platform = {
+      governance = {
+        environment_routing_target_environment_group_id = "not-a-valid-uuid"
+      }
+    }
+  }
+
+  expect_failures = [
+    var.power_platform,
+  ]
+}
+
+run "rejects_invalid_uuid_for_security_group_id" {
+  command = plan
+
+  variables {
+    power_platform = {
+      governance = {
+        environment_routing_target_security_group_id = "not-a-valid-uuid"
+      }
+    }
+  }
+
+  expect_failures = [
+    var.power_platform,
+  ]
 }
 
 run "creates_isolation_policy_with_multiple_tenants" {

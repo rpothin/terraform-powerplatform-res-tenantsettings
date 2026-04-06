@@ -19,15 +19,17 @@ resource "powerplatform_tenant_settings" "this" {
     }
 
     power_apps = {
-      disable_share_with_everyone              = var.power_platform.power_apps.disable_share_with_everyone
-      enable_guests_to_make                    = var.power_platform.power_apps.enable_guests_to_make
-      disable_maker_match                      = var.power_platform.power_apps.disable_maker_match
-      disable_unused_license_assignment        = var.power_platform.power_apps.disable_unused_license_assignment
       disable_connection_sharing_with_everyone = var.power_platform.power_apps.disable_connection_sharing_with_everyone
+      disable_maker_match                      = var.power_platform.power_apps.disable_maker_match
+      disable_members_indicator                = var.power_platform.power_apps.disable_members_indicator
+      disable_share_with_everyone              = var.power_platform.power_apps.disable_share_with_everyone
+      disable_unused_license_assignment        = var.power_platform.power_apps.disable_unused_license_assignment
+      enable_guests_to_make                    = var.power_platform.power_apps.enable_guests_to_make
     }
 
     power_automate = {
-      disable_copilot = var.power_platform.power_automate.disable_copilot
+      disable_copilot           = var.power_platform.power_automate.disable_copilot
+      disable_copilot_with_bing = var.power_platform.power_automate.disable_copilot_with_bing
     }
 
     environments = {
