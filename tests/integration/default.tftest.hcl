@@ -1,41 +1,51 @@
 # Integration tests — uses real provider, requires OIDC credentials.
 #
 # Prerequisites:
-#   ARM_USE_OIDC=true                              (signals OIDC mode; reused from AzureRM convention by the Power Platform provider)
+#   POWER_PLATFORM_USE_OIDC=true
 #   POWER_PLATFORM_TENANT_ID=<your-tenant-id>
 #   POWER_PLATFORM_CLIENT_ID=<your-client-id>
 #
-# These tests create real resources against a Power Platform tenant.
-# Resources are automatically destroyed after test completion.
+# These tests apply real changes to a Power Platform tenant.
+# Settings are restored/destroyed automatically after test completion.
 
-run "creates_resource_with_required_variables" {
+run "applies_secure_defaults" {
   command = apply
 
-  variables {
-    name     = "tftest-integration"
-    location = "unitedstates"
+  assert {
+    condition     = output.resource_id != null
+    error_message = "resource_id should be set after apply."
   }
 
   assert {
-    condition     = output.name == "tftest-integration"
-    error_message = "Resource name should match the input variable."
+    condition     = output.tenant_isolation_policy_id == null
+    error_message = "tenant_isolation_policy_id should be null when no policy is configured."
   }
 }
 
-run "creates_resource_with_all_variables" {
+run "applies_custom_settings" {
   command = apply
 
   variables {
-    name     = "tftest-integration-complete"
-    location = "unitedstates"
-    tags = {
-      environment = "integration-test"
-      managed_by  = "terraform-test"
+    disable_environment_creation_by_non_admin_users = false
+    disable_newsletter_sendout                      = false
+
+    power_platform = {
+      licensing = {
+        apply_auto_claim_to_only_managed_environments  = false
+        storage_capacity_consumption_warning_threshold = 90
+      }
+      intelligence = {
+        disable_copilot_feedback          = false
+        disable_copilot_feedback_metadata = false
+      }
+      catalog_settings = {
+        power_catalog_audience_setting = "All"
+      }
     }
   }
 
   assert {
-    condition     = output.name == "tftest-integration-complete"
-    error_message = "Resource name should match the input variable."
+    condition     = output.resource_id != null
+    error_message = "resource_id should be set after apply with custom settings."
   }
 }

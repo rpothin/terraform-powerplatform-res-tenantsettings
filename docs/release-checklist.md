@@ -13,15 +13,18 @@ Step-by-step instructions for publishing a new release of the module.
 
 ### Code Quality
 
-- [ ] Example `source` values updated from `../../` to the Terraform Registry address (e.g. `rpothin/power-platform/<module-name>`)
+- [ ] Example `source` values updated from `../../` to the Terraform Registry address (e.g. `rpothin/res-tenantsettings/power-platform`)
 - [ ] All CI checks pass on the `main` branch
 - [ ] `terraform fmt -check -recursive` passes
-- [ ] `terraform validate` passes
+- [ ] `make validate` passes
 - [ ] `terraform-docs .` produces no changes to `README.md`
-- [ ] Unit tests pass: `terraform test -test-directory=tests/unit`
+- [ ] Unit tests pass: `make test-unit`
 - [ ] Integration tests pass (if credentials available): `terraform test -test-directory=tests/integration`
-- [ ] Trivy security scan shows no HIGH/CRITICAL findings: `trivy config .`
+- [ ] Trivy security scan shows no HIGH/CRITICAL findings: `trivy config --config .trivy.yaml .`
 - [ ] All example READMEs are up to date
+
+> [!NOTE]
+> The `microsoft/power-platform` provider currently has an upstream `ValidateConfig` bug for `powerplatform_tenant_isolation_policy` when running raw `terraform validate`/`terraform test` against this module. Use the repository's `make validate` and `make test-unit` targets, which automatically apply the local patched provider override.
 
 ## Version Tagging Convention
 
@@ -49,8 +52,8 @@ This project follows [Semantic Versioning](https://semver.org/):
 
    ```bash
    make check-all
-   terraform test -test-directory=tests/unit
-   trivy config .
+   make test-unit
+   trivy config --config .trivy.yaml .
    ```
 
 3. **Create and push the version tag**
@@ -82,7 +85,7 @@ This project follows [Semantic Versioning](https://semver.org/):
 
      ```hcl
      module "example" {
-       source  = "rpothin/power-platform/<module-name>"
+       source  = "rpothin/res-tenantsettings/power-platform"
        version = "0.1.0"
        # ...
      }

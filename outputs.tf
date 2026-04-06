@@ -1,11 +1,9 @@
-# TODO: Replace these placeholder outputs with actual resource attributes.
-
 output "resource_id" {
-  description = "The ID of the managed resource."
-  value       = null # Replace with actual resource ID, e.g., powerplatform_environment.this.id
+  description = "The ID of the Power Platform tenant settings resource."
+  value       = powerplatform_tenant_settings.this.id
 }
 
-output "name" {
-  description = "The name of the managed resource."
-  value       = var.name
+output "tenant_isolation_policy_id" {
+  description = "The ID of the tenant isolation policy. Null if no isolation policy was created."
+  value       = length(powerplatform_tenant_isolation_policy.this) > 0 ? powerplatform_tenant_isolation_policy.this["this"].id : null
 }
