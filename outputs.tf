@@ -5,5 +5,5 @@ output "resource_id" {
 
 output "tenant_isolation_policy_id" {
   description = "The ID of the tenant isolation policy. Null if no isolation policy was created."
-  value       = length(powerplatform_tenant_isolation_policy.this) > 0 ? powerplatform_tenant_isolation_policy.this[0].id : null
+  value       = length(powerplatform_tenant_isolation_policy.this) > 0 ? powerplatform_tenant_isolation_policy.this["this"].id : null
 }

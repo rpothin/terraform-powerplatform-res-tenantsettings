@@ -1,4 +1,10 @@
-mock_provider "powerplatform" {}
+mock_provider "powerplatform" {
+  mock_resource "powerplatform_tenant_isolation_policy" {
+    defaults = {
+      id = "00000000-0000-0000-0000-000000000000"
+    }
+  }
+}
 
 # ──────────────────────────────────────────────────────────────
 # Default values — module should work with zero configuration
@@ -103,8 +109,10 @@ run "power_platform_defaults_are_secure" {
     error_message = "power_apps.enable_guests_to_make should default to false."
   }
 
+  # The provider accepts these fields at input, but does not expose them back on
+  # the planned resource object (not in the provider response schema at v4.1.0).
   assert {
-    condition     = powerplatform_tenant_settings.this.power_platform.power_apps.disable_members_indicator == true
+    condition     = var.power_platform.power_apps.disable_members_indicator == true
     error_message = "power_apps.disable_members_indicator should default to true."
   }
 

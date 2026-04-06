@@ -87,9 +87,8 @@ resource "powerplatform_tenant_settings" "this" {
 }
 
 resource "powerplatform_tenant_isolation_policy" "this" {
-  count = var.tenant_isolation_policy != null ? 1 : 0
+  for_each = var.tenant_isolation_policy != null ? { this = var.tenant_isolation_policy } : {}
 
-  is_disabled = var.tenant_isolation_policy.is_disabled
-
-  allowed_tenants = var.tenant_isolation_policy.allowed_tenants
+  is_disabled     = each.value.is_disabled
+  allowed_tenants = each.value.allowed_tenants
 }
